@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+                <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<title>Lucky Sevens</title>
+		<style>
+			#luckyDiv {
+				text-align: center;
+			}
+			caption {
+				text-align: center;
+				font-size: 24px;
+				text-decoration: underline;
+				font-weight: 900;
+			}
+			#tableDiv {
+				display: block;
+				background-color: silver;
+				width: 400px;
+				margin: 20px 500px 0px 500px;
+			}
+			table {
+				border-collapse: collapse;
+			}
+			table, th, td {
+				border: 1px solid white;
+				padding: 15px;
+			}
+		</style>
+		<script type="text/javascript">
+
+	
+			function doLoadStuff(){		
+				var tabDiv = document.getElementById("tableDiv");
+				tabDiv.style.display = "none";
+			}	
+			
+			function getRandomInt(min, max) {
+				min = Math.ceil(min);
+				max = Math.floor(max);
+				return Math.floor(Math.random() * (max - min)) + min;
+			}
+			
+			function playGame() {
+				var money = document.getElementById("bet").value;
+				document.getElementById("startingBet").innerHTML = money;
+				var moneySheet = new Array();
+				while (money > 0.99) {
+					dicesum = getRandomInt(1, 7) + getRandomInt(1, 7);
+					if (dicesum == 7) {
+						money += 4;
+						moneySheet.push(money);
+					}else {
+						money -= 1;
+						moneySheet.push(money);
+					}
+				}
+				var index = 0;
+				var high = 0;
+				while (index < moneySheet.length) {
+					if (moneySheet[index] > high){
+						high = moneySheet[index];
+						index++
+					} else {
+						index++
+					}
+				}
+				document.getElementById("rollCount").innerHTML = moneySheet.length;
+				document.getElementById("highestAmount").innerHTML = high;
+				document.getElementById("highestRoll").innerHTML = moneySheet.indexOf(high)+1;
+				document.getElementById("tableDiv").style.display = "block";
+			}
+			
+		</script>
+	</head>
+	<body onload="doLoadStuff();">
+		<div id="luckyDiv">
+			<h1>Lucky Sevens</h1>
+			Starting Bet: <input type="number" id="bet" value=0><br><br>
+			<div><button onclick="playGame();">Play</button></div>
+		</div>
+		<div id="tableDiv" align="center">
+			<table>
+				<br>
+				<caption>Results</caption>
+				<thead>
+					<tr bgcolor="gray" align="left">
+						<th>Starting Bet</th>
+						<th>$<span id="startingBet"></span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Total Rolls Before Going Broke</td>
+						<td><span id="rollCount"></span></td>
+					</tr>
+					<tr>
+						<td>Highest Amount Won</td>
+						<td>$<span id="highestAmount"></span></td>
+					</tr>
+					<tr>
+						<td>Roll Count At Highest Amount Won</td>
+						<td><span id="highestRoll"></span></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<input type="button" value="Click here to play again!" onclick="window.location.reload()">
+			<br><br>
+		</div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+	</body>
+</html>
